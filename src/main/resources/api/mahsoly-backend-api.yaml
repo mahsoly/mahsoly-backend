@@ -1,0 +1,444 @@
+openapi: 3.0.3
+info:
+  title: Mahsoly Market
+  version: '1.0'
+  description: The definition for the REST application interface of Mahsoly market
+  termsOfService: 'https://www.example.com'
+  contact:
+    name: Ahmed Abdulaziz
+    email: ahmed.ehab5010@gmail.com
+paths:
+  /products:
+    description: Products path
+    get:
+      tags:
+        - Product
+      operationId: getProducts
+      summary: gets all products
+      description: Get all products
+      responses:
+        '200':
+          description: 'Category response'
+          content:
+            'application/json':
+              schema:
+                type: 'array'
+                items:
+                  '$ref': '#/components/schemas/Product'
+        default:
+          description: 'Error response'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+      parameters:
+        - in: query
+          description: A boolean to indicate to only return favorites
+          schema:
+            type: boolean
+          name: favorite
+        - in: query
+          description: >-
+            Send a createdByUserId to return only data returned by a specific
+            user
+          schema:
+            type: integer
+            format: int64
+          name: createdByUserId
+        - name: latitude
+          in: query
+          schema:
+            type: number
+        - name: longitude
+          in: query
+          schema:
+            type: number
+    put:
+      description: Products path
+      operationId: updateProduct
+      summary: Update operation for the product
+      requestBody:
+        $ref: '#/components/requestBodies/Product'
+      tags:
+        - Product
+      responses:
+        default:
+          description: 'General repsonse'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+    post:
+      operationId: createProduct
+      summary: Creates a new product
+      requestBody:
+        $ref: '#/components/requestBodies/Product'
+      tags:
+        - Product
+      responses:
+        default:
+          description: 'General repsonse'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+  '/products/{productId}':
+    summary: Specific product path
+    delete:
+      description: >-
+        Delete a product by id, the product is not actually deleted but is
+        merely deactivated by making isActive to false
+      operationId: deleteProduct
+      summary: Deletes a product
+      tags:
+        - Product
+      responses:
+        default:
+          description: 'General repsonse'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+    parameters:
+      - in: path
+        name: productId
+        required: true
+        schema:
+          type: integer
+          format: int64
+  /users:
+    post:
+      tags:
+        - User
+      operationId: createUser
+      summary: Creates a new user
+      responses:
+        default:
+          description: 'General response'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+    put:
+      tags:
+        - User
+      operationId: updateUser
+      summary: Updates user data
+      responses:
+        default:
+          description: 'General response'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+  /farms:
+    post:
+      tags:
+        - Farm
+      operationId: createFarm
+      requestBody:
+        $ref: '#/components/requestBodies/Farm'
+      responses:
+        default:
+          description: 'General response'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+    put:
+      tags:
+        - Farm
+      requestBody:
+        $ref: '#/components/requestBodies/Farm'
+      operationId: updateFarm
+      responses:
+        default:
+          description: 'General response'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+    get:
+      description: >-
+        Get all farms, you can send favorite as a query parameter to only return
+        favorite farms
+      operationId: getFarms
+      summary: Get all farms
+      responses:
+        '200':
+          description: 'Category response'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/Farm'
+        default:
+          description: 'Error response'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+      parameters:
+        - in: query
+          schema:
+            type: boolean
+          name: favorite
+        - name: createdByUserId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: longitude
+          in: query
+          schema:
+            type: number
+        - name: latitude
+          in: query
+          schema:
+            type: number
+      tags:
+        - Farm
+  '/farms/{farmId}':
+    summary: Delete a farm by Id
+    delete:
+      tags:
+        - Farm
+      operationId: deleteFarm
+      summary: Delete a farm by ID
+      description: 'Delete a farm by ID, this will actually deactivate the farm'
+      responses:
+        default:
+          description: 'General repsonse for delete'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+    parameters:
+      - name: farmId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+  /categories:
+    summary: Categories related endpoints
+    description: >-
+      Categories endpoints are for any category that can be used for items or
+      filtering in general
+    get:
+      tags:
+        - Category
+      operationId: getCategories
+      responses:
+        '200':
+          description: 'Category response'
+          content:
+            'application/json':
+              schema:
+                type: 'array'
+                items:
+                  '$ref': '#/components/schemas/Category'
+        default:
+          description: 'Error response'
+          content:
+            'application/json':
+              schema:
+                '$ref': '#/components/schemas/MahsolyResponse'
+components:
+  schemas:
+    Category:
+      allOf:
+        - '$ref': '#/components/schemas/MahsolyResponse'
+      example:
+        name: Potato
+        type: V
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+      description: Provides categorization of market item
+    MahsolyResponse:
+      example:
+        responseCode: '0'
+        id: 1
+        isActive: true
+      type: object
+      properties:
+        responseCode:
+          type: string
+        id:
+          type: integer
+          format: int64
+        isActive:
+          type: boolean
+      description: The generic response of mahsoly
+    MarketItem:
+      allOf:
+        - '$ref': '#/components/schemas/MahsolyResponse'
+      example:
+        name: potato 1700 KG
+        user:
+          username: ahmedabdulaziz
+          email: ahmedabdulaziz@gmail.com
+        description: 1700 KG of potato
+        category:
+          name: Potato
+          type: V
+        price: 2560000.5
+        amount: 1699.99
+        longitude: 28.34111
+        latitude: 36.111245
+        creationDate: 11-03-2020
+        imagePaths:
+          - 'http://localhost:8080/assets/potatocollection.png'
+          - 'http://localhost:8080/assets/singlepotato.png'
+        unit: KG
+        isFavorite: true
+      type: object
+      required:
+        - name
+        - price
+        - amount
+        - unit
+      properties:
+        name:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/Category'
+        price:
+          type: number
+        amount:
+          type: number
+        longitude:
+          type: number
+        latitude:
+          type: number
+        creationDate:
+          type: string
+          format: date-time
+        imagePaths:
+          type: array
+          items:
+            type: string
+        unit:
+          type: string
+        isFavorite:
+          type: boolean
+      description: >-
+        The abstract entity of any item on the market, any item sold should be
+        an extension of this entity
+    User:
+      allOf:
+        - '$ref': '#/components/schemas/MahsolyResponse'
+      example:
+        username: ahmedabdulaziz
+        firstName: Ahmed
+        lastName: Abdulaziz
+        password: password123
+        email: ahmedabdulaziz@gmail.com
+        mobileNumber: '01114734723'
+      type: object
+      properties:
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        mobileNumber:
+          type: string
+      description: The user of the application
+    Product:
+      allOf:
+        - '$ref': '#/components/schemas/MarketItem'
+      example:
+        name: potato 1700 KG
+        user:
+          username: ahmedabdulaziz
+          email: ahmedabdulaziz@gmail.com
+        description: 1700 KG of potato
+        category:
+          name: Potato
+          type: V
+        price: 2560000.5
+        amount: 1699.99
+        longitude: 28.34111
+        latitude: 36.111245
+        creationDate: 11-03-2020
+        imagePaths:
+          - 'http://localhost:8080/assets/potatocollection.png'
+          - 'http://localhost:8080/assets/singlepotato.png'
+        unit: KG
+        isFavorite: true
+      type: object
+      properties: {}
+      description: 'The product of the land, as in the ready to be sold crop'
+    Farm:
+      allOf:
+        - '$ref': '#/components/schemas/MarketItem'
+      example:
+        name: Green field
+        user:
+          username: ahmedabdulaziz
+          email: ahmedabdulaziz@gmail.com
+        description: Green field by the nile
+        category:
+          name: Green field
+          type: L
+        price: 75622220
+        amount: 2950
+        longitude: 28.34111
+        latitude: 36.111245
+        creationDate: 11-07-2020
+        imagePaths:
+          - 'http://localhost:8080/assets/landskyview.png'
+          - 'http://localhost:8080/assets/landbuildingsview.png'
+        shape: elevated
+        unit: M3
+        isFavorite: true
+      type: object
+      properties:
+        shape:
+          type: string
+      description: A piece of land that's used to produce plants
+  parameters: {}
+  examples: {}
+  requestBodies:
+    Product:
+      description: Product
+      content:
+        'application/json':
+          schema:
+            '$ref': '#/components/schemas/Product'
+    Farm:
+      description: Farm
+      content:
+        'application/json':
+          schema:
+            '$ref': '#/components/schemas/Farm'
+  headers: {}
+tags:
+  - name: Product
+    description: Products and yields of the lands
+  - name: Category
+    description: Provides categorization of market items
+  - name: Farm
+    description: A market item that defines a farm
+  - name: User
+    description: The user of the application
+servers:
+  - url: 'http://localhost:8080'
+    description: http
+    variables: {}
