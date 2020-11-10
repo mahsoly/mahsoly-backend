@@ -1,0 +1,12 @@
+spring:
+  liquibase:
+    url: jdbc:postgresql://localhost:5432/mahsoly    change-log: classpath:db/changelog/master.changeset.xml
+    user: postgres
+    password: postgres
+    enabled: true
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/mahsoly
+    username: postgres
+    password: postgres
+    name: mahsoly
+    
