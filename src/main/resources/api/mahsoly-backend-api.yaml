@@ -24,13 +24,13 @@ paths:
               schema:
                 type: 'array'
                 items:
-                  '$ref': '#/components/schemas/Product'
+                  '$ref': '#/components/schemas/ProductDto'
         default:
           description: 'Error response'
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
       parameters:
         - in: query
           description: A boolean to indicate to only return favorites
@@ -67,7 +67,7 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
     post:
       operationId: createProduct
       summary: Creates a new product
@@ -81,7 +81,7 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
   '/products/{productId}':
     summary: Specific product path
     delete:
@@ -98,7 +98,7 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
     parameters:
       - in: path
         name: productId
@@ -118,7 +118,7 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
     put:
       tags:
         - User
@@ -130,7 +130,7 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
   /farms:
     post:
       tags:
@@ -144,7 +144,7 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
     put:
       tags:
         - Farm
@@ -157,7 +157,7 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
     get:
       description: >-
         Get all farms, you can send favorite as a query parameter to only return
@@ -170,13 +170,13 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/Farm'
+                '$ref': '#/components/schemas/FarmDto'
         default:
           description: 'Error response'
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
       parameters:
         - in: query
           schema:
@@ -211,7 +211,7 @@ paths:
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
     parameters:
       - name: farmId
         in: path
@@ -236,18 +236,18 @@ paths:
               schema:
                 type: 'array'
                 items:
-                  '$ref': '#/components/schemas/Category'
+                  '$ref': '#/components/schemas/CategoryDto'
         default:
           description: 'Error response'
           content:
             'application/json':
               schema:
-                '$ref': '#/components/schemas/MahsolyResponse'
+                '$ref': '#/components/schemas/MahsolyResponseDto'
 components:
   schemas:
-    Category:
+    CategoryDto:
       allOf:
-        - '$ref': '#/components/schemas/MahsolyResponse'
+        - '$ref': '#/components/schemas/MahsolyResponseDto'
       example:
         name: Potato
         type: V
@@ -261,7 +261,7 @@ components:
         type:
           type: string
       description: Provides categorization of market item
-    MahsolyResponse:
+    MahsolyResponseDto:
       example:
         responseCode: '0'
         id: 1
@@ -276,9 +276,9 @@ components:
         isActive:
           type: boolean
       description: The generic response of mahsoly
-    MarketItem:
+    MarketItemDto:
       allOf:
-        - '$ref': '#/components/schemas/MahsolyResponse'
+        - '$ref': '#/components/schemas/MahsolyResponseDto'
       example:
         name: potato 1700 KG
         user:
@@ -308,11 +308,11 @@ components:
         name:
           type: string
         user:
-          $ref: '#/components/schemas/User'
+          $ref: '#/components/schemas/UserDto'
         description:
           type: string
         category:
-          $ref: '#/components/schemas/Category'
+          $ref: '#/components/schemas/CategoryDto'
         price:
           type: number
         amount:
@@ -335,9 +335,9 @@ components:
       description: >-
         The abstract entity of any item on the market, any item sold should be
         an extension of this entity
-    User:
+    UserDto:
       allOf:
-        - '$ref': '#/components/schemas/MahsolyResponse'
+        - '$ref': '#/components/schemas/MahsolyResponseDto'
       example:
         username: ahmedabdulaziz
         firstName: Ahmed
@@ -360,9 +360,9 @@ components:
         mobileNumber:
           type: string
       description: The user of the application
-    Product:
+    ProductDto:
       allOf:
-        - '$ref': '#/components/schemas/MarketItem'
+        - '$ref': '#/components/schemas/MarketItemDto'
       example:
         name: potato 1700 KG
         user:
@@ -385,9 +385,9 @@ components:
       type: object
       properties: {}
       description: 'The product of the land, as in the ready to be sold crop'
-    Farm:
+    FarmDto:
       allOf:
-        - '$ref': '#/components/schemas/MarketItem'
+        - '$ref': '#/components/schemas/MarketItemDto'
       example:
         name: Green field
         user:
@@ -421,13 +421,13 @@ components:
       content:
         'application/json':
           schema:
-            '$ref': '#/components/schemas/Product'
+            '$ref': '#/components/schemas/ProductDto'
     Farm:
       description: Farm
       content:
         'application/json':
           schema:
-            '$ref': '#/components/schemas/Farm'
+            '$ref': '#/components/schemas/FarmDto'
   headers: {}
 tags:
   - name: Product
