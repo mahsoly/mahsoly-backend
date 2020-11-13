@@ -1,7 +1,8 @@
-package com.mahsoly.app.service;
+package com.mahsoly.app.market.category.service;
 
 
-import com.mahsoly.app.domain.Category;
+import com.mahsoly.app.market.category.domain.Category;
+
 import reactor.core.publisher.Flux;
 
 

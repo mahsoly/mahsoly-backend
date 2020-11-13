@@ -1,9 +1,9 @@
-package com.mahsoly.app.service;
+package com.mahsoly.app.market.category.service;
 
 import org.springframework.stereotype.Service;
 
-import com.mahsoly.app.domain.Category;
-import com.mahsoly.app.repo.CategoryRepository;
+import com.mahsoly.app.market.category.domain.Category;
+import com.mahsoly.app.market.category.repo.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;

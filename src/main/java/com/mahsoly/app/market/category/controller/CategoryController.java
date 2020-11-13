@@ -1,12 +1,12 @@
-package com.mahsoly.app.controller;
+package com.mahsoly.app.market.category.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.mahsoly.app.api.CategoryApi;
+import com.mahsoly.app.market.category.service.CategoryService;
 import com.mahsoly.app.model.CategoryDto;
-import com.mahsoly.app.service.CategoryService;
 
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Flux;

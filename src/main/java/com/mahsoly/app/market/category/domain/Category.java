@@ -1,4 +1,4 @@
-package com.mahsoly.app.domain;
+package com.mahsoly.app.market.category.domain;
 
 import org.springframework.data.relational.core.mapping.Table;
 
