@@ -1,12 +1,17 @@
+server:
+  port: 8080
 spring:
   liquibase:
     url: jdbc:postgresql://localhost:5432/mahsoly    change-log: classpath:db/changelog/master.changeset.xml
     user: postgres
     password: postgres
+    drop-first: true
     enabled: true
-  r2dbc:
-    url: r2dbc:postgresql://localhost:5432/mahsoly
+  datasource:
+    driver-class-name: org.postgresql.Driver    url: jdbc:postgresql://localhost:5432/mahsoly
     username: postgres
     password: postgres
-    name: mahsoly
-    
+    name: mahsoly  
+  jpa:
+    show-sql: true
+    hibernate:      ddl-auto: update
