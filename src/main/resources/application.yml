@@ -13,5 +13,14 @@ spring:
     password: postgres
     name: mahsoly  
   jpa:
-    show-sql: true
     hibernate:      ddl-auto: update
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:key.pub
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

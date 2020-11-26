@@ -1,0 +1,85 @@
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet id="1" author="ahmedabdulaziz">
+		<comment>Create Permission Table</comment>
+		<createTable tableName="permission">
+			<column autoIncrement="true" name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)" />
+			<column name="is_active" type="boolean" defaultValueBoolean="true"/>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="2" author="ahmedabdulaziz">
+		<comment>Create Role Table</comment>
+		<createTable tableName="role">
+			<column autoIncrement="true" name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)" />
+			<column name="is_active" type="boolean" defaultValueBoolean="true"/>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="3" author="ahmedabdulaziz">
+		<comment>Create Role Permission Table</comment>
+		<createTable tableName="role_permission">
+			<column name="role_id" type="bigint"></column>
+			<column name="permission_id" type="bigint"></column>
+			<column name="is_active" type="boolean" defaultValueBoolean="true"/>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="4" author="ahmedabdulaziz">
+		<comment>Create AppUser Table</comment>
+		<createTable tableName="app_user">
+			<column autoIncrement="true" name="id" type="bigint">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="username" type="varchar(255)"></column>
+			<column name="first_name" type="varchar(255)"></column>
+			<column name="last_name" type="varchar(255)"></column>
+			<column name="password" type="varchar(255)"></column>
+			<column name="email" type="varchar(255)"></column>
+			<column name="mobile_number" type="varchar(15)"></column>
+			<column name="role_id" type="bigint"></column>
+			<column name="is_active" type="boolean" defaultValueBoolean="true"/>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="5" author="ahmedabdulaziz">
+		<comment>Add Role Permission Unique Constraints</comment>
+
+		<addUniqueConstraint
+			columnNames="role_id, permission_id" tableName="role_permission" />
+	</changeSet>
+
+	<changeSet id="6" author="ahmedabdulaziz">
+		<comment>Add App User Role Foreign Key</comment>
+		<addForeignKeyConstraint
+			constraintName="fk_app_user_role" baseColumnNames="role_id"
+			baseTableName="app_user" referencedTableName="role"
+			referencedColumnNames="id" />
+	</changeSet>
+
+	<changeSet id="7" author="ahmedabdulaziz">
+		<comment>Add Role Permission Role Reference</comment>
+		<addForeignKeyConstraint
+			constraintName="fk_role_permission_role" baseColumnNames="role_id"
+			baseTableName="role_permission" referencedTableName="role"
+			referencedColumnNames="id" />
+	</changeSet>
+
+	<changeSet id="8" author="ahmedabdulaziz">
+		<comment>Add Role Permission Permission Reference</comment>
+		<addForeignKeyConstraint
+			constraintName="fk_role_permission_permission"
+			baseColumnNames="permission_id" baseTableName="role_permission"
+			referencedTableName="permission" referencedColumnNames="id" />
+	</changeSet>
+</databaseChangeLog>

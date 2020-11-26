@@ -1,16 +1,38 @@
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-	 <changeSet id="1" author="ahmedabdulaziz">
+	<changeSet id="1" author="ahmedabdulaziz">
 		<comment>Create Category Table</comment>
 		<createTable tableName="category">
-			<column name="id" type="SERIAL">
+			<column autoIncrement="true" name="id" type="bigint">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="name" type="varchar(30)" />
 			<column name="type" type="varchar(30)" />
+			<column name="is_active" type="boolean"
+				defaultValueBoolean="true" />
 		</createTable>
+	</changeSet>
+
+	<changeSet id="2" author="ahmedabdulaziz"
+		context="dev-config">
+		<insert tableName="category">
+			<column name="name" value="Potato"></column>
+			<column name="type" value="V"></column>
+			<column name="is_active" value="true"></column>
+		</insert>
+		<insert tableName="category">
+			<column name="name" value="Orange"></column>
+			<column name="type" value="F"></column>
+			<column name="is_active" value="true"></column>
+		</insert>
+		<insert tableName="category">
+			<column name="name" value="Carrot"></column>
+			<column name="type" value="V"></column>
+			<column name="is_active" value="true"></column>
+		</insert>
 	</changeSet>
 </databaseChangeLog>

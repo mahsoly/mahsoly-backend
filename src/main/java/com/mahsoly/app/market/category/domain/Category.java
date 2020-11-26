@@ -1,15 +1,16 @@
 package com.mahsoly.app.market.category.domain;
 
-import org.springframework.data.relational.core.mapping.Table;
+import javax.persistence.Entity;
+
+import com.mahsoly.app.common.domain.AbstractEntity;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.EqualsAndHashCode;
 
 @Data
-@Table("category")
-public class Category {
-	@Id
-	private Long id;
+@EqualsAndHashCode(callSuper = true)
+@Entity
+public class Category extends AbstractEntity{
 	private String name;
 	private String type;
 }
