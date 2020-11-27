@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "mahsoly.security.issuer-uri",
+  "type": "java.lang.String",
+  "description": "This should the keycloak issuer uri"
+}]}

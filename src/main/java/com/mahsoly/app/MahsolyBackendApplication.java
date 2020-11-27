@@ -11,8 +11,8 @@ import reactor.blockhound.BlockHound;
 public class MahsolyBackendApplication {
 
 	public static void main(String[] args) {
-		//ReactorDebugAgent.init();
-		BlockHound.install(); // TODO: only enable in development
+		// ReactorDebugAgent.init();
+		BlockHound.builder().allowBlockingCallsInside("ReactiveRemoteJWKSource", "getJWKSet").install(); // Allow blocking retrieval of JWK on start of the application
 		SpringApplication.run(MahsolyBackendApplication.class, args);
 	}
 
